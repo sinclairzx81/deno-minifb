@@ -1,0 +1,6 @@
+# native
+native/target
+native/Cargo.lock
+
+# src
+lib/native
