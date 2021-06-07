@@ -2,7 +2,7 @@
 
 <h1>Deno-MiniFB</h1>
 
-<p>Render 32-bit Pixel Buffers to Desktop Windows</p>
+<p>Render 32-bit RGBA Buffers to Desktop Windows</p>
 
 </div>
 
