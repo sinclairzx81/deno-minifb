@@ -26,14 +26,14 @@ export async function start_native() {
     await Promise.all([
         shell(`hammer monitor "native/src native/src/window" "cd native && cargo build --release"`),
         watch('native/target/release/native.dll', async () => {
-            await file('native/target/release/native.dll').copy('lib/native').catch(() => {})
-            await file('native/target/release/libnative.so').copy('lib/native').catch(() => {})
+            await file('native/target/release/native.dll').copy('example/engine/window/native').catch(() => {})
+            await file('native/target/release/libnative.dll').copy('example/engine/window/native').catch(() => {})
         })
     ])
 }
 
 export async function start_deno() {
-    await shell(`hammer monitor "lib example example/engine" "cd example && deno run --unstable --allow-plugin --allow-write mod.ts"`)
+    await shell(`hammer monitor "lib example example/engine" "cd example && deno run --unstable --allow-plugin --allow-write main.ts"`)
 }
 
 export async function start() {
