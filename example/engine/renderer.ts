@@ -1,5 +1,9 @@
-import { device }        from './device.ts'
-import { getRowPadding } from './padding.ts'
+import { device }                                    from './device.ts'
+import { getRowPadding }                             from './padding.ts'
+import { Camera, Scene, Mesh }                       from './scene/mod.ts'
+import { Geometry, IndexAttribute, VertexAttribute } from './geometry/mod.ts'
+import { Material }                                  from './material/mod.ts'
+import { Texture }                                   from './texture/mod.ts'
 
 export class Renderer {
     private readonly pipelineLayout: GPUPipelineLayout
@@ -84,7 +88,7 @@ export class Renderer {
         this.gpuBuffer.unmap()
     }
 
-    public async render() {
+    public async render(camera: Camera, scene: Scene) {
         const encoder = device.createCommandEncoder()
         const colorAttachment: GPURenderPassColorAttachment = {
             view:      this.gpuTexture.createView(),

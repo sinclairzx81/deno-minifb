@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 ---------------------------------------------------------------------------*/
 
-import { Matrix }  from './matrix'
-import { Vector3 } from './vector3'
+import { Matrix }  from './matrix.ts'
+import { Vector3 } from './vector3.ts'
 
 export class Quaternion {
 

@@ -4,8 +4,8 @@ import { Object3D } from './object.ts'
 
 export class Mesh extends Object3D {
     constructor(
-        private readonly geometry: Geometry,
-        private readonly material: Material
+        public readonly geometry: Geometry,
+        public readonly material: Material
     ) {
         super()
     }
