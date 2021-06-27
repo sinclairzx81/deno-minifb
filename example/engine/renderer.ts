@@ -35,7 +35,7 @@ export class Renderer {
             }
             [[stage(fragment)]]
             fn fs_main() -> [[location(0)]] vec4<f32> {
-                return vec4<f32>(1.0, 1.0, 0.0, 1.0);
+                return vec4<f32>(0.3, 0.3, 0.3, 1.0);
             }`),
         })
         this.pipelineLayout = device.createPipelineLayout({
@@ -89,7 +89,7 @@ export class Renderer {
         const colorAttachment: GPURenderPassColorAttachment = {
             view:      this.gpuTexture.createView(),
             storeOp:   "store",
-            loadValue: [0, 1, 0, 1]
+            loadValue: [0.1, 0.1, 0.1, 1]
         }
         const renderPass = encoder.beginRenderPass({
             colorAttachments: [colorAttachment],
