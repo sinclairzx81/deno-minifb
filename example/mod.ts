@@ -1,12 +1,12 @@
 
-import * as Acid  from './engine/mod.ts'
+import * as Delta from './engine/mod.ts'
 import { Window } from '../lib/mod.ts'
 const window   = new Window({ width: 800, height: 600, x: 2000, topmost: true })
-const renderer = new Acid.Renderer(800, 600)
-const geometry = new Acid.BoxGeometry(10, 10, 10)
-const material = new Acid.Material(null as any)
-const mesh     = new Acid.Mesh(geometry, material)
-const scene    = new Acid.Scene()
+const renderer = new Delta.Renderer(800, 600)
+const geometry = new Delta.BoxGeometry(10, 10, 10)
+const material = new Delta.Material(null as any)
+const mesh     = new Delta.Mesh(geometry, material)
+const scene    = new Delta.Scene()
 
 let i = 0
 
