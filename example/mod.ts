@@ -1,22 +1,19 @@
+
+import * as Acid  from './engine/renderer/mod.ts'
 import { Window } from '../lib/mod.ts'
+const window   = new Window({ width: 800, height: 600, x: 2000, topmost: true })
+const renderer = new Acid.Renderer(800, 600)
+const geometry = new Acid.BoxGeometry(10, 10, 10)
+const material = new Acid.Material(null as any)
+const mesh     = new Acid.Mesh(geometry, material)
+const scene    = new Acid.Scene()
 
-function noise(buffer: Uint8Array) {
-    for(let i = 0; i < buffer.length; i+=4) {
-        const random = Math.floor(Math.random() * 256) 
-        buffer[i+0] = random
-        buffer[i+1] = random 
-        buffer[i+2] = random
-        buffer[i+3] = random
-    }
-}
+let i = 0
 
-const buffer = new Uint8Array(800 * 600 * 4)
+setInterval(() => { console.log('last', i); i = 0 }, 1000)
 
-const window = new Window({ width: 800, height: 600, topmost: true })
-
-window.render(() => {
-
-    noise(buffer)
-
+window.render(async () => {
+    i++
+    const buffer = await renderer.render()
     window.submit(buffer)
 })

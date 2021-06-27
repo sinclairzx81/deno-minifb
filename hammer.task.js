@@ -33,12 +33,14 @@ export async function start_native() {
 }
 
 export async function start_deno() {
-    const command = `deno run --unstable --allow-plugin --allow-write mod.ts`
-    await shell(`hammer monitor "lib example" "cd example && ${command}"`)
+    await shell(`hammer monitor "lib example example/engine/renderer" "cd example && deno run --unstable --allow-plugin --allow-write mod.ts"`)
 }
 
 export async function start() {
     await build_native()
-    await Promise.all([start_native(), start_deno() ])
+    await Promise.all([
+        start_native(),
+        start_deno() 
+    ])
 }
 

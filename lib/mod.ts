@@ -163,7 +163,7 @@ export class Window {
         interop.window_cursor({...this.handle, value })
     }
 
-    /** Submits a buffer to this window. */
+    /** Submits a gpuBuffer to this window. */
     public submit(buffer: Uint8Array): void {
         interop.window_submit({...this.handle }, buffer)
     }
@@ -194,9 +194,9 @@ export class Window {
     public render(func: WindowRenderFunction, rate: number = 16) {
         if(this.onRender !== undefined) throw Error('The render function can only be called once.');
         this.onRender = func
-        const loop = () => {
+        const loop = async () => {
             this.update()
-            this.onRender!()
+            await this.onRender!()
             if(!this.isOpen()) return
             setTimeout(() => loop(), rate)
         }
