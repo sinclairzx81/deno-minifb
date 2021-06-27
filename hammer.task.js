@@ -33,7 +33,7 @@ export async function start_native() {
 }
 
 export async function start_deno() {
-    await shell(`hammer monitor "lib example example/engine/renderer" "cd example && deno run --unstable --allow-plugin --allow-write mod.ts"`)
+    await shell(`hammer monitor "lib example example/engine" "cd example && deno run --unstable --allow-plugin --allow-write mod.ts"`)
 }
 
 export async function start() {

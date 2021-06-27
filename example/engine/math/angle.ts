@@ -26,18 +26,9 @@ THE SOFTWARE.
 
 ---------------------------------------------------------------------------*/
 
-export * from './angle.ts'
-export * from './radian.ts'
-export * from './matrix.ts'
-export * from './plane.ts'
-export * from './quaternion.ts'
-export * from './single.ts'
-export * from './vector2.ts'
-export * from './vector3.ts'
-export * from './vector4.ts'
-export * from './vectorN.ts'
-export * from './ray.ts'
-export * from './triangle.ts'
-export * from './box.ts'
-export * from './sphere.ts'
-export * from './frustum.ts'
+export class Angle {
+    /** Creates an angle from the given radian. */
+    public static fromRadian(radian: number): number {
+        return (radian * 57.29578)
+    }
+}

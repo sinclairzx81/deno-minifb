@@ -1,5 +1,5 @@
 
-import * as Acid  from './engine/renderer/mod.ts'
+import * as Acid  from './engine/mod.ts'
 import { Window } from '../lib/mod.ts'
 const window   = new Window({ width: 800, height: 600, x: 2000, topmost: true })
 const renderer = new Acid.Renderer(800, 600)
