@@ -8,7 +8,11 @@ const material = new Engine.Material(null as any)
 const mesh     = new Engine.Mesh(geometry, material)
 const light    = new Engine.Light()
 const scene    = new Engine.Scene()
-const m2       = new Engine.StandardMaterial()
+
+
+
+
+console.log(geometry)
 
 scene.objects.push(mesh)
 scene.objects.push(light)
