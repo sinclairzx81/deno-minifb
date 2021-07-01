@@ -9,9 +9,6 @@ const mesh     = new Engine.Mesh(geometry, material)
 const light    = new Engine.Light()
 const scene    = new Engine.Scene()
 
-
-
-
 console.log(geometry)
 
 scene.objects.push(mesh)

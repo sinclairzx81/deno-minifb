@@ -26,8 +26,12 @@ THE SOFTWARE.
 
 ---------------------------------------------------------------------------*/
 
-use serde::{ Serialize, Deserialize };
-use window::{ DenoWindow, DenoWindowOptions, Mouse, Size };
+mod window;
+mod resources;
+
+pub use serde::{ Serialize, Deserialize };
+pub use window::{ DenoWindow, DenoWindowOptions, Mouse, Size };
+pub use resources:: { Resources };
 
 use deno_core::op_sync;
 use deno_core::error::AnyError;
@@ -36,7 +40,6 @@ use deno_core::OpState;
 use deno_core::ResourceId;
 use deno_core::ZeroCopyBuf;
 
-mod window;
 
 // -----------------------------------------------------------------
 // Contract
@@ -157,30 +160,30 @@ mod window;
 
 fn op_minifb_window_create(_state: &mut OpState, request: WindowCreateRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowCreateResponse, AnyError> {
   let window = DenoWindow::new(request.options)?;
-  let rid = DenoWindow::set(window);
+  let rid = Resources::set(window);
   let response = WindowCreateResponse { rid };
   Ok(response)
 }
 
 fn op_minifb_window_update(_state: &mut OpState, request: WindowUpdateRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowUpdateResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   window.update();
   Ok(WindowUpdateResponse { rid: request.rid })
 }
 
 fn op_minifb_window_submit(_state: &mut OpState, request: WindowSubmitRequest, zero_copy: Option<ZeroCopyBuf>) -> Result<WindowSubmitResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   if let Some(mut buffer) = zero_copy { window.submit(&mut buffer[..])?; }
   Ok(WindowSubmitResponse { rid: request.rid })
 }
 
 fn op_minifb_window_close(_state: &mut OpState, request: WindowCloseRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowCloseResponse, AnyError> {
-  DenoWindow::delete(request.rid);
+  Resources::delete(request.rid);
   Ok(WindowCloseResponse { rid: request.rid })
 }
 
 fn op_minifb_window_is_open(_state: &mut OpState, request: WindowOpenRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowOpenResponse, AnyError> {
-  if let Some(window) = DenoWindow::get(request.rid) {
+  if let Some(window) = Resources::get_mut::<DenoWindow>(request.rid) {
     let value = window.is_open();
     Ok(WindowOpenResponse { rid: request.rid, value })
   } else {
@@ -189,44 +192,44 @@ fn op_minifb_window_is_open(_state: &mut OpState, request: WindowOpenRequest, _z
 }
 
 fn op_minifb_window_topmost(_state: &mut OpState, request: WindowTopmostRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowTopmostResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   window.topmost(request.value);
   Ok(WindowTopmostResponse { rid: request.rid })
 }
 
 fn op_minifb_window_position(_state: &mut OpState, request: WindowPositionRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowPositionResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   window.position(request.x, request.y);
   Ok(WindowPositionResponse { rid: request.rid })
 }
 
 
 fn op_minifb_window_background(_state: &mut OpState, request: WindowBackgroundRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowBackgroundResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   window.background(request.r, request.g, request.b);
   Ok(WindowBackgroundResponse { rid: request.rid })
 }
 
 fn op_minifb_window_cursor(_state: &mut OpState, request: WindowCursorRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowCursorResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   window.cursor(request.value);
   Ok(WindowCursorResponse { rid: request.rid })
 }
 
 fn op_minifb_window_mouse(_state: &mut OpState, request: WindowMouseRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowMouseResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   let value = window.mouse(request.mode);
   Ok(WindowMouseResponse { rid: request.rid, value })
 }
 
 fn op_minifb_window_size(_state: &mut OpState, request: WindowSizeRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowSizeResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   let value = window.size();
   Ok(WindowSizeResponse { rid: request.rid, value })
 }
 
 fn op_minifb_window_keys(_state: &mut OpState, request: WindowKeysRequest, _zero_copy: Option<ZeroCopyBuf>) -> Result<WindowKeysResponse, AnyError> {
-  let window = DenoWindow::get(request.rid).unwrap();
+  let window = Resources::get_mut::<DenoWindow>(request.rid).unwrap();
   let value = window.keys();
   Ok(WindowKeysResponse { rid: request.rid, value })
 }

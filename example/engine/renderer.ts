@@ -95,12 +95,12 @@ export class Renderer {
             storeOp:   "store",
             loadValue: [0.1, 0.1, 0.1, 1]
         }
-        const renderPass = encoder.beginRenderPass({
+        const renderPassEncoder = encoder.beginRenderPass({
             colorAttachments: [colorAttachment],
         })
-        renderPass.setPipeline(this.renderPipeline)
-        renderPass.draw(3, 1)
-        renderPass.endPass()
+        renderPassEncoder.setPipeline(this.renderPipeline)
+        renderPassEncoder.draw(3, 1)
+        renderPassEncoder.endPass()
 
         this.copyTextureToBuffer(encoder)
         await this.copyBufferToOutput()
